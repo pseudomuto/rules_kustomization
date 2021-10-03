@@ -1,0 +1,5 @@
+# bazel things
+bazel-bin
+bazel-out
+bazel-rules_kustomize
+bazel-testlogs

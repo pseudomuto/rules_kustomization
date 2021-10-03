@@ -1,0 +1,7 @@
+workspace(name = "example")
+
+local_repository(name = "com_pseudomuto_rules_kustomization", path = "../")
+
+load("@com_pseudomuto_rules_kustomization//:workspace.bzl", "download_kustomize")
+download_kustomize()
+

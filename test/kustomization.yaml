@@ -1,0 +1,6 @@
+resources:
+  - bases/namespace.yaml
+  - bases/deployment.yaml
+
+patchesStrategicMerge:
+  - patches/deployment-image.yaml

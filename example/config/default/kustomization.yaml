@@ -1,0 +1,6 @@
+namespace: my-operator-system
+namePrefix: my-operator-
+
+resources:
+  - ../crd
+  - ../manager
