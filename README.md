@@ -1,5 +1,7 @@
 # rules_kustomization
 
+![Build status](https://github.com/pseudomuto/rules_kustomization/actions/workflows/ci.yaml/badge.svg?branch=main)
+
 A bazel macro for generating kustomize bases. The main motivation for this macro is to make it easy to use kustomize to
 build manifests that can be used as k8s_deploy/k8s_object dependencies, etc.
 
