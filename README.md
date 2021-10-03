@@ -1,2 +1,56 @@
-# rules_kustomize
-A bazel macro for generating kustomize bases
+# rules_kustomization
+
+A bazel macro for generating kustomize bases. The main motivation for this macro is to make it easy to use kustomize to
+build manifests that can be used as k8s_deploy/k8s_object dependencies, etc.
+
+It has been tested on OSX (amd64 and arm64) and Linux amd64. Other platform _may_ work.
+
+## Setup
+
+In your WORKSPACE file add the following:
+
+```bzl
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "com_pseudomuto_rules_kustomization",
+    sha256 = "6ac3ae8a3c443682fbe12b874d80223f3464b56598db0dd8f71808aeba43dfc3",
+    strip_prefix = "rules_kustomization-8a4bb581df9f3a485909f902b611573ae2644a5c",
+    urls = ["https://github.com/pseudomuto/rules_kustomization/archive/8a4bb581df9f3a485909f902b611573ae2644a5c.tar.gz"],
+)
+
+load("@com_pseudomuto_rules_kustomization//:workspace.bzl", "download_kustomize")
+download_kustomize()
+```
+
+## Usage
+
+Add the following to your BUILD file. This build file must be a sibling of kustomization.yaml. See the
+[example](example) for a working demo.
+
+```bzl
+load("@com_pseudomuto_rules_kustomization//:defs.bzl", "kustomization")
+
+kustomization(
+    name = "kustomization",
+    srcs = glob(["**/*.yaml"]),
+)
+```
+
+This can then be used as input by other rules. For example:
+
+```bzl
+# ...omitted code from above
+load("@k8s_deploy//:defaults.bzl", "k8s_deploy")
+k8s_deploy(
+    name = "crd",
+    template = ":kustomization", # the name from above
+    visibility = ["//visibility:public"],
+)
+```
+
+### Viewing output
+
+If you'd like to see what is being generated, you can run the `<name>.manifest` rule. Assuming we have the kustomization
+rule above you'd run `bazel run //<target>:kustomization.manifest`. This will dump the result from `kustomize build` to
+stdout.
