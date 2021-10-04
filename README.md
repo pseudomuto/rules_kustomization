@@ -17,7 +17,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "com_pseudomuto_rules_kustomization",
     sha256 = "f25fecad8852572028e8f17080267dd915bbc6f258370ed6d4dccf4203159096",
-    strip_prefix = "rules_kustomization-v0.1.0",
+    strip_prefix = "rules_kustomization-0.1.0",
     urls = ["https://github.com/pseudomuto/rules_kustomization/archive/v0.1.0.tar.gz"],
 )
 
